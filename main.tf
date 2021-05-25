@@ -37,10 +37,10 @@ data "template_file" "user_data" {
 ${var.cloud_provider == "azure" && var.type == "library" ? data.template_file.azure_api_node.rendered : ""}
 ${var.cloud_provider == "gcp" && var.type == "library" ? data.template_file.gcp_api_node.rendered : ""}
 ${var.disable_ipv6 ? data.template_file.disable_ipv6.rendered : ""}
-${var.consul_enabled && var.prometheus_enabled ? data.template_file.prometheus_consul.rendered : ""}
-${var.consul_enabled ? data.template_file.consul.rendered : ""}
+${var.prometheus_enabled ? data.template_file.prometheus_consul.rendered : ""}
 ${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "aws" ? data.template_file.nitro_ebs.rendered : ""}
 ${var.driver_type == "standard" && local.ebs_attachment && var.cloud_provider == "aws" ? data.template_file.standard_ebs.rendered : ""}
+${var.envoy_enabled ? data.template_file.envoy.rendered : ""}
 ${var.type == "validator" ? data.template_file.validator.rendered : ""}
 ${var.type == "sentry" ? data.template_file.sentry.rendered : ""}
 ${var.type == "bastion_s3" ? data.template_file.bastion_s3.rendered : ""}

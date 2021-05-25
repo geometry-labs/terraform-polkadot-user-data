@@ -17,7 +17,7 @@ PRIVIP=$(curl -H Metadata:true "http://169.254.169.254/metadata/instance/network
 
 AUTH_STRING=$(echo -n "${var.prometheus_user}:${var.prometheus_password}" | base64)
 
-tee -a /home/ubuntu/host-node-exporter-payload.json << HOSTPAYLOADEND
+tee -a /etc/consul/consul.d/host-node-exporter-payload.json << HOSTPAYLOADEND
 {
   "service": {
     "ID": "host_$INSTANCE_ID",
@@ -38,7 +38,7 @@ tee -a /home/ubuntu/host-node-exporter-payload.json << HOSTPAYLOADEND
 }
 HOSTPAYLOADEND
 
-tee -a /home/ubuntu/polkadot-client-node-exporter-payload.json << CLIENTPAYLOADEND
+tee -a /etc/consul/consul.d/polkadot-client-node-exporter-payload.json << CLIENTPAYLOADEND
 {
   "service": {
     "ID": "polkadot_$INSTANCE_ID",

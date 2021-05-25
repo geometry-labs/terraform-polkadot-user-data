@@ -10,12 +10,6 @@ variable "disable_ipv6" {
   default     = true
 }
 
-variable "consul_enabled" {
-  description = "Enable consul service"
-  type        = bool
-  default     = false
-}
-
 variable "node_tags" {
   description = "The tag to put into the node exporter for consul to pick up the tag of the instance and associate the proper metrics"
   type        = string
@@ -27,6 +21,13 @@ variable "prometheus_enabled" {
   type        = bool
   default     = false
 }
+
+variable "envoy_enabled" {
+  description = "Configure Envoy proxy for Consul Connect"
+  type        = bool
+  default     = false
+}
+
 
 variable "type" {
   description = "Type of node - ie sentry / validator, - more to come"
