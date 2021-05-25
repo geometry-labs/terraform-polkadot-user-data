@@ -2,49 +2,20 @@ locals {
   ebs_attachment = contains(["sentry", "validator", "library"], var.type) && var.mount_volumes
 }
 
-data "template_file" "disable_ipv6" {
-  template = <<-EOF
-sudo sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT="maybe-ubiquity"/GRUB_CMDLINE_LINUX_DEFAULT="ipv6.disable=1 maybe-ubiquity"/' /etc/default/grub
-sudo sed -i -e 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="ipv6.disable=1"/' /etc/default/grub
-sudo update-grub
-EOF
-}
-
-data "template_file" "nitro_ebs" {
-  template = <<-EOF
-apt-get upgrade -y linux-aws
-file -s /dev/nvme1n1
-mkdir /data
-chown -R ubuntu:ubuntu /data
-mkfs -t xfs /dev/nvme1n1
-mount /dev/nvme1n1 /data
-EOF
-}
-
-data "template_file" "standard_ebs" {
-  template = <<-EOF
-mkdir /data
-chown -R ubuntu:ubuntu /data/
-mkfs.ext4 /dev/xvdf
-mount /dev/xvdf /data
-EOF
-}
-
-
 data "template_file" "user_data" {
   template = <<-EOF
 #!/usr/bin/env bash
-${var.cloud_provider == "azure" && var.type == "library" ? data.template_file.azure_api_node.rendered : ""}
-${var.cloud_provider == "gcp" && var.type == "library" ? data.template_file.gcp_api_node.rendered : ""}
-${var.disable_ipv6 ? data.template_file.disable_ipv6.rendered : ""}
+${var.cloud_provider == "azure" && var.type == "library" ? file("${path.module}/templates/azure_api.tpl") : ""}
+${var.cloud_provider == "gcp" && var.type == "library" ? file("${path.module}/templates/gcp_api.tpl") : ""}
+${var.disable_ipv6 ? file("${path.module}/templates/disable_ipv6.tpl") : ""}
 ${var.prometheus_enabled ? data.template_file.prometheus_consul.rendered : ""}
-${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "aws" ? data.template_file.nitro_ebs.rendered : ""}
-${var.driver_type == "standard" && local.ebs_attachment && var.cloud_provider == "aws" ? data.template_file.standard_ebs.rendered : ""}
-${var.envoy_enabled ? data.template_file.envoy.rendered : ""}
+${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "aws" ? file("${path.module}/templates/nitro_ebs.tpl") : ""}
+${var.driver_type == "standard" && local.ebs_attachment && var.cloud_provider == "aws" ? file("${path.module}/templates/standard_ebs.tpl") : ""}
+${var.envoy_enabled ? file("${path.module}/templates/envoy.tpl") : ""}
 ${var.type == "validator" ? data.template_file.validator.rendered : ""}
 ${var.type == "sentry" ? data.template_file.sentry.rendered : ""}
 ${var.type == "bastion_s3" ? data.template_file.bastion_s3.rendered : ""}
-${var.type == "library" ? data.template_file.library_node.rendered : ""}
+${var.type == "library" ? file("${path.module}/templates/library.tpl") : ""}
 EOF
 
   vars = {}
