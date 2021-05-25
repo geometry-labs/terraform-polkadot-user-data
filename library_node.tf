@@ -1,7 +1,7 @@
 data "template_file" "library_node" {
   template = <<-EOT
     for NETWORK in $(cat /home/ubuntu/deployed_networks); do
-        systemctl stop ${NETWORK}
+        systemctl stop $${NETWORK}
     done
     mkdir -p /data/polkadot
     chmod a+rw /data/polkadot
@@ -14,7 +14,7 @@ data "template_file" "library_node" {
     fi
     ln -s /data/polkadot /home/polkadot/.local/share
     for NETWORK in $(cat /home/ubuntu/deployed_networks); do
-        systemctl start ${NETWORK}
+        systemctl start $${NETWORK}
     done
   EOT
 }
