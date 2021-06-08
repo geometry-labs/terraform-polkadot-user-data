@@ -6,7 +6,7 @@ echo "Templating Consul service files..."
 jinja2 -D instance_id=$INSTANCE_ID /etc/consul/consul.d/service_$${NETWORK}_json.json -o /etc/consul/consul.d/service_$${NETWORK}_json_templated.json
 mv /etc/consul/consul.d/service_$${NETWORK}_json_templated.json /etc/consul/consul.d/service_$${NETWORK}_json.json
 jinja2 -D instance_id=$INSTANCE_ID /etc/consul/consul.d/service_$${NETWORK}_ws.json -o /etc/consul/consul.d/service_$${NETWORK}_ws_templated.json
-mv /etc/consul/consul.d/service_$${NETWORK}_ws_templated.json /etc/consul/consul.d/service_$${NETWORK}_json.json
+mv /etc/consul/consul.d/service_$${NETWORK}_ws_templated.json /etc/consul/consul.d/service_$${NETWORK}_ws.json
 echo "Templating Systemd unit files..."
 jinja2 -D instance_id=$INSTANCE_ID /etc/systemd/system/service_$${NETWORK}_json.service -o /etc/systemd/system/service_$${NETWORK}_json_templated.service
 mv /etc/systemd/system/service_$${NETWORK}_json_templated.service /etc/systemd/system/service_$${NETWORK}_json.service
