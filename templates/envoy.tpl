@@ -1,5 +1,12 @@
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
 
+echo "Ensuring Consul is running..."
+systemctl start consul
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://127.0.0.1:8500/v1/agent/self)" != "200" ]]; do
+echo "Consul not ready yet. Waiting..."
+sleep 1
+done
+
 for NETWORK in $(cat /home/ubuntu/deployed_networks); do
 echo "Templating Consul service files..."
 jinja2 -D instance_id=$INSTANCE_ID /etc/consul/consul.d/service_$${NETWORK}_json.json -o /etc/consul/consul.d/service_$${NETWORK}_json_templated.json
@@ -12,6 +19,7 @@ jinja2 -D instance_id=$INSTANCE_ID /etc/systemd/system/service_$${NETWORK}_json.
 mv /etc/systemd/system/service_$${NETWORK}_json_templated.service /etc/systemd/system/service_$${NETWORK}_json.service
 jinja2 -D instance_id=$INSTANCE_ID /etc/systemd/system/service_$${NETWORK}_ws.service -o /etc/systemd/system/service_$${NETWORK}_ws_templated.service
 mv /etc/systemd/system/service_$${NETWORK}_ws_templated.service /etc/systemd/system/service_$${NETWORK}_ws.service
+
 echo "Refreshing certificates..."
 /etc/consul/refresh_certs_$${NETWORK}.sh
 
