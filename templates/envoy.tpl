@@ -2,7 +2,7 @@ INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
 
 echo "Ensuring Consul is running..."
 systemctl start consul
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://127.0.0.1:8500/v1/agent/self)" != "200" ]]; do
+while [[ "$(curl -s -o /dev/null -w ''%%{http_code}'' http://127.0.0.1:8500/v1/agent/self)" != "200" ]]; do
 echo "Consul not ready yet. Waiting..."
 sleep 1
 done
