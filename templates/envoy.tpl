@@ -7,6 +7,9 @@ echo "Consul not ready yet. Waiting..."
 sleep 1
 done
 
+echo "Consul is ready. Waiting 1 minute to sync services..."
+sleep 60
+
 for NETWORK in $(cat /home/ubuntu/deployed_networks); do
 echo "Templating Consul service files..."
 jinja2 -D instance_id=$INSTANCE_ID /etc/consul/consul.d/service_$${NETWORK}_json.json -o /etc/consul/consul.d/service_$${NETWORK}_json_templated.json
