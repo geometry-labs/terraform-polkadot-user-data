@@ -4,7 +4,9 @@ locals {
 
 data "template_file" "user_data" {
   template = <<-EOF
-#!/usr/bin/env bash
+#cloud-boothook
+#!/bin/bash
+set +e
 touch /home/ubuntu/user-data-started
 ${var.cloud_provider == "azure" && var.type == "library" ? file("${path.module}/templates/azure_api.tpl") : ""}
 ${var.cloud_provider == "gcp" && var.type == "library" ? file("${path.module}/templates/gcp_api.tpl") : ""}
