@@ -16,6 +16,7 @@ ${var.type == "validator" ? data.template_file.validator.rendered : ""}
 ${var.type == "sentry" ? data.template_file.sentry.rendered : ""}
 ${var.type == "bastion_s3" ? data.template_file.bastion_s3.rendered : ""}
 ${var.type == "library" ? file("${path.module}/templates/library.tpl") : ""}
+touch /home/ubuntu/user-data-complete
 EOF
 
   vars = {}
