@@ -4,8 +4,8 @@ locals {
 
 data "template_file" "user_data" {
   template = <<-EOF
-#cloud-boothook
 #!/usr/bin/env bash
+touch /home/ubuntu/user-data-started
 ${var.cloud_provider == "azure" && var.type == "library" ? file("${path.module}/templates/azure_api.tpl") : ""}
 ${var.cloud_provider == "gcp" && var.type == "library" ? file("${path.module}/templates/gcp_api.tpl") : ""}
 ${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "aws" ? file("${path.module}/templates/nitro_ebs.tpl") : ""}
