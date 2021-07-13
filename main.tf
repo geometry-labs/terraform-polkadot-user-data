@@ -7,10 +7,10 @@ data "template_file" "user_data" {
 #!/usr/bin/env bash
 ${var.cloud_provider == "azure" && var.type == "library" ? file("${path.module}/templates/azure_api.tpl") : ""}
 ${var.cloud_provider == "gcp" && var.type == "library" ? file("${path.module}/templates/gcp_api.tpl") : ""}
-${var.disable_ipv6 ? file("${path.module}/templates/disable_ipv6.tpl") : ""}
-${var.prometheus_enabled ? data.template_file.prometheus_consul.rendered : ""}
 ${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "aws" ? file("${path.module}/templates/nitro_ebs.tpl") : ""}
 ${var.driver_type == "standard" && local.ebs_attachment && var.cloud_provider == "aws" ? file("${path.module}/templates/standard_ebs.tpl") : ""}
+${var.disable_ipv6 ? file("${path.module}/templates/disable_ipv6.tpl") : ""}
+${var.prometheus_enabled ? data.template_file.prometheus_consul.rendered : ""}
 ${var.envoy_enabled ? file("${path.module}/templates/envoy.tpl") : ""}
 ${var.type == "validator" ? data.template_file.validator.rendered : ""}
 ${var.type == "sentry" ? data.template_file.sentry.rendered : ""}
