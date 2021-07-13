@@ -6,11 +6,11 @@ chmod a+rw /data/polkadot
 chown polkadot:polkadot /data/polkadot
 if [[ -d /home/polkadot/.local/share/polkadot/chains ]]
 then
-  mv /home/polkadot/.local/share/polkadot/chains /data/polkadot/
+  mv /home/polkadot/.local/share/polkadot/ /data/
 else
   mkdir -p /home/polkadot/.local/share/
 fi
-ln -s /data/polkadot /home/polkadot/.local/share
+ln -s /data/polkadot /home/polkadot/.local/share/
 for NETWORK in $(cat /home/ubuntu/deployed_networks); do
   systemctl start $${NETWORK}
 done
