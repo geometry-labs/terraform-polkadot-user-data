@@ -11,6 +11,3 @@ else
   mkdir -p /home/polkadot/.local/share/
 fi
 ln -s /data/polkadot /home/polkadot/.local/share/
-for NETWORK in $(cat /home/ubuntu/deployed_networks); do
-  systemctl start $${NETWORK}
-done
