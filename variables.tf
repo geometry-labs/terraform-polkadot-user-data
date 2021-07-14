@@ -22,13 +22,6 @@ variable "prometheus_enabled" {
   default     = false
 }
 
-variable "envoy_enabled" {
-  description = "Configure Envoy proxy for Consul Connect"
-  type        = bool
-  default     = false
-}
-
-
 variable "type" {
   description = "Type of node - ie sentry / validator, - more to come"
   type        = string

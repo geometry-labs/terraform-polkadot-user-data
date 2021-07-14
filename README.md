@@ -61,7 +61,6 @@ No modules.
 | <a name="input_disable_ipv6"></a> [disable\_ipv6](#input\_disable\_ipv6) | Disable ipv6 in grub | `bool` | `true` | no |
 | <a name="input_driver_type"></a> [driver\_type](#input\_driver\_type) | The ebs volume driver - nitro or standard | `string` | `"nitro"` | no |
 | <a name="input_enable_hourly_cron_updates"></a> [enable\_hourly\_cron\_updates](#input\_enable\_hourly\_cron\_updates) | n/a | `string` | `"false"` | no |
-| <a name="input_envoy_enabled"></a> [envoy\_enabled](#input\_envoy\_enabled) | Configure Envoy proxy for Consul Connect | `bool` | `false` | no |
 | <a name="input_keys_update_frequency"></a> [keys\_update\_frequency](#input\_keys\_update\_frequency) | n/a | `string` | `""` | no |
 | <a name="input_log_config_bucket"></a> [log\_config\_bucket](#input\_log\_config\_bucket) | n/a | `string` | `""` | no |
 | <a name="input_log_config_key"></a> [log\_config\_key](#input\_log\_config\_key) | n/a | `string` | `""` | no |

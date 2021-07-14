@@ -14,7 +14,6 @@ ${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "a
 ${var.driver_type == "standard" && local.ebs_attachment && var.cloud_provider == "aws" ? file("${path.module}/templates/standard_ebs.tpl") : ""}
 ${var.disable_ipv6 ? file("${path.module}/templates/disable_ipv6.tpl") : ""}
 ${var.prometheus_enabled ? data.template_file.prometheus_consul.rendered : ""}
-${var.envoy_enabled ? file("${path.module}/templates/envoy.tpl") : ""}
 ${var.type == "validator" ? data.template_file.validator.rendered : ""}
 ${var.type == "sentry" ? data.template_file.sentry.rendered : ""}
 ${var.type == "bastion_s3" ? data.template_file.bastion_s3.rendered : ""}
