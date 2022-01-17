@@ -58,3 +58,9 @@ variable "prometheus_password" {
   type        = string
   default     = ""
 }
+
+variable "boot_drive_nvme" {
+  description = "Boolean to set if instance boot drive is also nvme"
+  type        = bool
+  default     = false
+}

@@ -57,6 +57,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_boot_drive_nvme"></a> [boot\_drive\_nvme](#input\_boot\_drive\_nvme) | Boolean to set if instance boot drive is also nvme | `bool` | `false` | no |
 | <a name="input_cloud_provider"></a> [cloud\_provider](#input\_cloud\_provider) | What provider is this node running on? | `string` | n/a | yes |
 | <a name="input_disable_ipv6"></a> [disable\_ipv6](#input\_disable\_ipv6) | Disable ipv6 in grub | `bool` | `true` | no |
 | <a name="input_driver_type"></a> [driver\_type](#input\_driver\_type) | The ebs volume driver - nitro or standard | `string` | `"nitro"` | no |
