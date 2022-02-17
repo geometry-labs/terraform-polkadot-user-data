@@ -10,6 +10,7 @@ set +e
 touch /home/ubuntu/user-data-started
 ${var.cloud_provider == "azure" && var.type == "library" ? file("${path.module}/templates/azure_api.tpl") : ""}
 ${var.cloud_provider == "gcp" && var.type == "library" ? file("${path.module}/templates/gcp_api.tpl") : ""}
+${var.driver_type == "raid" && var.cloud_provider == "aws" ? file("${path.module}/templates/instance_raid.tpl") : ""}
 ${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "aws" && !var.boot_drive_nvme ? file("${path.module}/templates/nitro_ebs.tpl") : ""}
 ${var.driver_type == "nitro" && local.ebs_attachment && var.cloud_provider == "aws" && var.boot_drive_nvme ? file("${path.module}/templates/nitro_ebs_boot_nvme.tpl") : ""}
 ${var.driver_type == "standard" && local.ebs_attachment && var.cloud_provider == "aws" ? file("${path.module}/templates/standard_ebs.tpl") : ""}
@@ -24,4 +25,3 @@ EOF
 
   vars = {}
 }
-
